@@ -24,7 +24,7 @@ router.get('/', function(req, res, next) {
             resp.on('end', function(){
                 parser.parseString(data, function(error, result) {
                     if(error === null) {
-                        console.log(result);
+                        // console.log(result);
                         // console.log(result.rss.channel);
 
                         let indicesToRemove = [];
