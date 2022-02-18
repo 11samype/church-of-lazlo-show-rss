@@ -16,14 +16,19 @@ router.get('/', function(req, res, next) {
         res.set('Content-Type', 'text/xml');
         res.send(cachedBody);
     } else {
-        https.get("https://www.omnycontent.com/d/playlist/4b5f9d6d-9214-48cb-8455-a73200038129/58b96555-229e-4e83-9f3b-a92b00874970/2330c70f-f043-4c6c-ba75-a92b00874974/podcast.rss", function(resp) {
+        https.get("https://www.omnycontent.com/d/playlist/4b5f9d6d-9214-48cb-8455-a73200038129/58b96555-229e-4e83-9f3b-a92b00874970/2330c70f-f043-4c6c-ba75-a92b00874974/podcast.rss", (resp) => {
+            const { statusCode } = resp;    
+            if (statusCode !== 200) {
+                res.status(500).send({error: 'Podcast feed failed to load'});
+                return;
+            }
             let data = '';
             resp.on('data', function(stream) {
                 data += stream;
             });
             resp.on('end', function(){
                 parser.parseString(data, function(error, result) {
-                    if(error === null) {
+                    if(error === null && result !== null) {
                         // console.log(result);
                         // console.log(result.rss.channel);
 
@@ -48,13 +53,14 @@ router.get('/', function(req, res, next) {
                     }
                     else {
                         console.log(error);
+                        res.status(500).send({error: 'Failed to parse RSS'});
                     }
                     
                 });
             });
+        }).on("error", (e) => {
+            res.status(500).send({error: 'HTTPS request failed'});
         });
-        // res.send('respond with a resource');
-        // TODO: handle errors
     }
 });
 
