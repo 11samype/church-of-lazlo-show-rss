@@ -34,7 +34,7 @@ router.get('/', function(req, res, next) {
 
                         let indicesToRemove = [];
                         result.rss.channel[0].item.forEach((element, index) => {
-                            if (!element.title[0].includes("The Church of Lazlo Podcast")) {
+                            if (!element.title[0].includes("Church of Lazlo")) {
                                 indicesToRemove.push(index)
                             }
                         });
