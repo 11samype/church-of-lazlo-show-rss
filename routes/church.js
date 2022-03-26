@@ -5,6 +5,8 @@ var xml2js = require('xml2js');
 var router = express.Router();
 const parser = new xml2js.Parser();
 
+const dateRegex = /(\d{1,2}.\d{1,2}.\d{2,4})/;
+
 router.get('/', function(req, res, next) {
 
     // check cache
@@ -35,7 +37,8 @@ router.get('/', function(req, res, next) {
                         let indicesToRemove = [];
                         result.rss.channel[0].item.forEach((element, index) => {
                             if (!element.title[0].includes("The Church of Lazlo Podcast") &&
-                                !element.title[0].includes("Church of Lazlo Uncensored")) {
+                                !element.title[0].includes("Church of Lazlo Uncensored") &&
+                                !element.title[0].match(dateRegex)) {
                                 indicesToRemove.push(index)
                             }
                         });
