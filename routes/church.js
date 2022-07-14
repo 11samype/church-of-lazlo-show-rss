@@ -38,6 +38,7 @@ router.get('/', function(req, res, next) {
                         result.rss.channel[0].item.forEach((element, index) => {
                             if (!element.title[0].includes("The Church of Lazlo Podcast") &&
                                 !element.title[0].includes("Church of Lazlo Uncensored") &&
+                                !element.title[0].includes("Best Of:") &&
                                 !element.title[0].match(dateRegex)) {
                                 indicesToRemove.push(index)
                             }
