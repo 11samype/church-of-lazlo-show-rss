@@ -39,6 +39,7 @@ router.get('/', function(req, res, next) {
                             if (!element.title[0].includes("The Church of Lazlo Podcast") &&
                                 !element.title[0].includes("Church of Lazlo Uncensored") &&
                                 !element.title[0].includes("Best Of:") &&
+                                !element.title[0].includes("Toxic and Problematic with Slim and Lazlo") &&
                                 !element.title[0].match(dateRegex)) {
                                 indicesToRemove.push(index)
                             }
